@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 def importDataFromFile():
     df = pd.read_csv('goodreads_library_export.csv')
-    df[['ISBN', 'ISBN13']] = df[['ISBN', 'ISBN13']].applymap(lambda x: re.sub(r'\D', '', str(x)))
+    df[['ISBN', 'ISBN13']] = df[['ISBN', 'ISBN13']].map(lambda x: re.sub(r'\D', '', str(x)))
     df['Author'] = df['Author'].str.split().str.join(' ')
     df[['Date Read', 'Date Added']] = df[['Date Read', 'Date Added']].apply(lambda x: pd.to_datetime(x, format='%Y/%m/%d'))
     get_genres(df)
